@@ -10,3 +10,23 @@ add_two <- function(x) {
     .Call(`_rleops_add_two`, x)
 }
 
+#' Add two rle objects, element-wise
+#'
+#' @param rle_a An R rle list object
+#' @param rle_b An R rle list object
+#' @return An R rle list object containing the sum
+#' @export
+rle_add <- function(rle_a, rle_b) {
+    .Call(`_rleops_rle_add`, rle_a, rle_b)
+}
+
+#' Multiply two rle objects, element-wise
+#'
+#' @param rle_a An R rle list object
+#' @param rle_b An R rle list object
+#' @return An R rle list object containing the product
+#' @export
+rle_multiply <- function(rle_a, rle_b) {
+    .Call(`_rleops_rle_multiply`, rle_a, rle_b)
+}
+
