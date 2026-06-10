@@ -2,6 +2,8 @@
 
 #include <functional>
 
+#include "common.hpp"
+
 using namespace Rcpp;
 
 template <typename F>
@@ -25,7 +27,8 @@ List dot_rle_binary_op(List rle_a, List rle_b, F binary_func) {
         double current_result = binary_func(vals_a[i], vals_b[j]);
         size_t step = (rem_a < rem_b) ? rem_a : rem_b;
 
-        if (!out_vals.empty() && out_vals.back() == current_result) {
+        if (!out_vals.empty() &&
+            dot_rle_is_same(out_vals.back(), current_result)) {
             out_lens.back() += step;
         } else {
             out_vals.push_back(current_result);
@@ -67,5 +70,20 @@ List rle_add(List rle_a, List rle_b) {
 // [[Rcpp::export]]
 List rle_multiply(List rle_a, List rle_b) {
     auto binary_func = [](double x, double y) { return x * y; };
+    return dot_rle_binary_op(rle_a, rle_b, binary_func);
+}
+
+//' Returns true if both rle object have the same elements
+//'
+//' @param rle_a An R rle list object
+//' @param rle_b An R rle list object
+//' @return An R rle list object containing 1.0 (TRUE), 0.0 (FALSE) or NaN
+//' @export
+// [[Rcpp::export]]
+List rle_eq(List rle_a, List rle_b) {
+    auto binary_func = [](double x, double y) {
+        if (NumericVector::is_na(x) || NumericVector::is_na(y)) return NA_REAL;
+        return (x == y) ? 1.0 : 0.0;
+    };
     return dot_rle_binary_op(rle_a, rle_b, binary_func);
 }

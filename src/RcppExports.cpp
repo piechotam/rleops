@@ -10,17 +10,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// add_two
-NumericVector add_two(NumericVector x);
-RcppExport SEXP _rleops_add_two(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(add_two(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rle_add
 List rle_add(List rle_a, List rle_b);
 RcppExport SEXP _rleops_rle_add(SEXP rle_aSEXP, SEXP rle_bSEXP) {
@@ -45,11 +34,37 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rle_eq
+List rle_eq(List rle_a, List rle_b);
+RcppExport SEXP _rleops_rle_eq(SEXP rle_aSEXP, SEXP rle_bSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle_a(rle_aSEXP);
+    Rcpp::traits::input_parameter< List >::type rle_b(rle_bSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_eq(rle_a, rle_b));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rle_slice
+List rle_slice(List rle, size_t start, size_t end);
+RcppExport SEXP _rleops_rle_slice(SEXP rleSEXP, SEXP startSEXP, SEXP endSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle(rleSEXP);
+    Rcpp::traits::input_parameter< size_t >::type start(startSEXP);
+    Rcpp::traits::input_parameter< size_t >::type end(endSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_slice(rle, start, end));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rleops_add_two", (DL_FUNC) &_rleops_add_two, 1},
     {"_rleops_rle_add", (DL_FUNC) &_rleops_rle_add, 2},
     {"_rleops_rle_multiply", (DL_FUNC) &_rleops_rle_multiply, 2},
+    {"_rleops_rle_eq", (DL_FUNC) &_rleops_rle_eq, 2},
+    {"_rleops_rle_slice", (DL_FUNC) &_rleops_rle_slice, 3},
     {NULL, NULL, 0}
 };
 
