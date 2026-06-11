@@ -59,12 +59,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rle_cummax
+List rle_cummax(List rle);
+RcppExport SEXP _rleops_rle_cummax(SEXP rleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle(rleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_cummax(rle));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rle_cummin
+List rle_cummin(List rle);
+RcppExport SEXP _rleops_rle_cummin(SEXP rleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle(rleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_cummin(rle));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rleops_rle_add", (DL_FUNC) &_rleops_rle_add, 2},
     {"_rleops_rle_multiply", (DL_FUNC) &_rleops_rle_multiply, 2},
     {"_rleops_rle_eq", (DL_FUNC) &_rleops_rle_eq, 2},
     {"_rleops_rle_slice", (DL_FUNC) &_rleops_rle_slice, 3},
+    {"_rleops_rle_cummax", (DL_FUNC) &_rleops_rle_cummax, 1},
+    {"_rleops_rle_cummin", (DL_FUNC) &_rleops_rle_cummin, 1},
     {NULL, NULL, 0}
 };
 

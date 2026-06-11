@@ -42,3 +42,21 @@ rle_slice <- function(rle, start, end) {
     .Call(`_rleops_rle_slice`, rle, start, end)
 }
 
+#' Cumulative Max of an rle object
+#'
+#' @param rle An R rle list object
+#' @return An R rle list object
+#' @export
+rle_cummax <- function(rle) {
+    .Call(`_rleops_rle_cummax`, rle)
+}
+
+#' Cumulative Min of an rle object
+#'
+#' @param rle An R rle list object
+#' @return An R rle list object
+#' @export
+rle_cummin <- function(rle) {
+    .Call(`_rleops_rle_cummin`, rle)
+}
+
