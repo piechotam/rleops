@@ -31,6 +31,24 @@ rle_eq <- function(rle_a, rle_b) {
     .Call(`_rleops_rle_eq`, rle_a, rle_b)
 }
 
+#' Compact an RLE object by merging identical runs
+#'
+#' @param rle An R rle list object
+#' @return An R rle list object with identical runs merged
+#' @export
+rle_compact <- function(rle) {
+    .Call(`_rleops_rle_compact`, rle)
+}
+
+#' Unique values and their frequencies of an RLE object
+#'
+#' @param rle An R rle list object
+#' @return A list containing unique values and their total counts
+#' @export
+rle_value_counts <- function(rle) {
+    .Call(`_rleops_rle_value_counts`, rle)
+}
+
 #' Extract a slice of an rle vector
 #'
 #' @param rle An R rle list object
@@ -40,6 +58,15 @@ rle_eq <- function(rle_a, rle_b) {
 #' @export
 rle_slice <- function(rle, start, end) {
     .Call(`_rleops_rle_slice`, rle, start, end)
+}
+
+#' Find indices of TRUE (1.0) values in an RLE object
+#'
+#' @param rle An R rle list object (where 1.0 represents TRUE)
+#' @return An integer vector of 1-based indices
+#' @export
+rle_which <- function(rle) {
+    .Call(`_rleops_rle_which`, rle)
 }
 
 #' Cumulative Max of an rle object

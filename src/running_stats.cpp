@@ -2,25 +2,9 @@
 
 #include <vector>
 
+#include "common.hpp"
+
 using namespace Rcpp;
-
-inline void dot_push_rle(std::vector<double>& vals, std::vector<size_t>& lens,
-                         double val, size_t len) {
-    if (len <= 0) return;
-    bool na_val = NumericVector::is_na(val);
-
-    if (!vals.empty()) {
-        bool na_back = NumericVector::is_na(vals.back());
-        // if value matches the last, just increase last length
-        if ((na_val && na_back) ||
-            (!na_val && !na_back && vals.back() == val)) {
-            lens.back() += len;
-            return;
-        }
-    }
-    vals.push_back(val);
-    lens.push_back(len);
-}
 
 template <typename F>
 List dot_rle_cumagg(List rle, F agg_func, double agg_init) {

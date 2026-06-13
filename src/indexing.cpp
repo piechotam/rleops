@@ -46,3 +46,39 @@ List rle_slice(List rle, size_t start, size_t end) {
     return List::create(Named("lengths") = wrap(out_lens),
                         Named("values") = wrap(out_vals));
 }
+
+//' Find indices of TRUE (1.0) values in an RLE object
+//'
+//' @param rle An R rle list object (where 1.0 represents TRUE)
+//' @return An integer vector of 1-based indices
+//' @export
+// [[Rcpp::export]]
+IntegerVector rle_which(List rle) {
+    NumericVector vals = rle["values"];
+    IntegerVector lens = rle["lengths"];
+    int n = vals.size();
+
+    // First pass: count total TRUEs to pre-allocate exact memory size
+    int true_count = 0;
+    for (int i = 0; i < n; ++i) {
+        if (!NumericVector::is_na(vals[i]) && vals[i] == 1.0) {
+            true_count += lens[i];
+        }
+    }
+
+    IntegerVector out(true_count);
+    int idx = 0;
+    int current_pos = 1; // R is 1-based
+
+    // Second pass: populate indices
+    for (int i = 0; i < n; ++i) {
+        if (!NumericVector::is_na(vals[i]) && vals[i] == 1.0) {
+            for (int j = 0; j < lens[i]; ++j) {
+                out[idx++] = current_pos + j;
+            }
+        }
+        current_pos += lens[i];
+    }
+
+    return out;
+}
