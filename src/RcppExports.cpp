@@ -11,38 +11,67 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // rle_add
-List rle_add(List rle_a, List rle_b);
-RcppExport SEXP _rleops_rle_add(SEXP rle_aSEXP, SEXP rle_bSEXP) {
+List rle_add(List rle_a, List rle_b, bool recycle);
+RcppExport SEXP _rleops_rle_add(SEXP rle_aSEXP, SEXP rle_bSEXP, SEXP recycleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type rle_a(rle_aSEXP);
     Rcpp::traits::input_parameter< List >::type rle_b(rle_bSEXP);
-    rcpp_result_gen = Rcpp::wrap(rle_add(rle_a, rle_b));
+    Rcpp::traits::input_parameter< bool >::type recycle(recycleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_add(rle_a, rle_b, recycle));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rle_substract
+List rle_substract(List rle_a, List rle_b, bool recycle);
+RcppExport SEXP _rleops_rle_substract(SEXP rle_aSEXP, SEXP rle_bSEXP, SEXP recycleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle_a(rle_aSEXP);
+    Rcpp::traits::input_parameter< List >::type rle_b(rle_bSEXP);
+    Rcpp::traits::input_parameter< bool >::type recycle(recycleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_substract(rle_a, rle_b, recycle));
     return rcpp_result_gen;
 END_RCPP
 }
 // rle_multiply
-List rle_multiply(List rle_a, List rle_b);
-RcppExport SEXP _rleops_rle_multiply(SEXP rle_aSEXP, SEXP rle_bSEXP) {
+List rle_multiply(List rle_a, List rle_b, bool recycle);
+RcppExport SEXP _rleops_rle_multiply(SEXP rle_aSEXP, SEXP rle_bSEXP, SEXP recycleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type rle_a(rle_aSEXP);
     Rcpp::traits::input_parameter< List >::type rle_b(rle_bSEXP);
-    rcpp_result_gen = Rcpp::wrap(rle_multiply(rle_a, rle_b));
+    Rcpp::traits::input_parameter< bool >::type recycle(recycleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_multiply(rle_a, rle_b, recycle));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rle_divide
+List rle_divide(List rle_a, List rle_b, bool recycle);
+RcppExport SEXP _rleops_rle_divide(SEXP rle_aSEXP, SEXP rle_bSEXP, SEXP recycleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle_a(rle_aSEXP);
+    Rcpp::traits::input_parameter< List >::type rle_b(rle_bSEXP);
+    Rcpp::traits::input_parameter< bool >::type recycle(recycleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_divide(rle_a, rle_b, recycle));
     return rcpp_result_gen;
 END_RCPP
 }
 // rle_eq
-List rle_eq(List rle_a, List rle_b);
-RcppExport SEXP _rleops_rle_eq(SEXP rle_aSEXP, SEXP rle_bSEXP) {
+List rle_eq(List rle_a, List rle_b, bool recycle);
+RcppExport SEXP _rleops_rle_eq(SEXP rle_aSEXP, SEXP rle_bSEXP, SEXP recycleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type rle_a(rle_aSEXP);
     Rcpp::traits::input_parameter< List >::type rle_b(rle_bSEXP);
-    rcpp_result_gen = Rcpp::wrap(rle_eq(rle_a, rle_b));
+    Rcpp::traits::input_parameter< bool >::type recycle(recycleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_eq(rle_a, rle_b, recycle));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -116,9 +145,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rleops_rle_add", (DL_FUNC) &_rleops_rle_add, 2},
-    {"_rleops_rle_multiply", (DL_FUNC) &_rleops_rle_multiply, 2},
-    {"_rleops_rle_eq", (DL_FUNC) &_rleops_rle_eq, 2},
+    {"_rleops_rle_add", (DL_FUNC) &_rleops_rle_add, 3},
+    {"_rleops_rle_substract", (DL_FUNC) &_rleops_rle_substract, 3},
+    {"_rleops_rle_multiply", (DL_FUNC) &_rleops_rle_multiply, 3},
+    {"_rleops_rle_divide", (DL_FUNC) &_rleops_rle_divide, 3},
+    {"_rleops_rle_eq", (DL_FUNC) &_rleops_rle_eq, 3},
     {"_rleops_rle_compact", (DL_FUNC) &_rleops_rle_compact, 1},
     {"_rleops_rle_value_counts", (DL_FUNC) &_rleops_rle_value_counts, 1},
     {"_rleops_rle_slice", (DL_FUNC) &_rleops_rle_slice, 3},

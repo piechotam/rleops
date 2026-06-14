@@ -5,23 +5,43 @@
 #'
 #' @param rle_a An R rle list object
 #' @param rle_b An R rle list object
+#' @param recycle If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.
 #' @return An R rle list object containing the sum
 #' @examples
 #' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
 #' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
 #' result <- rle_add(rle_a, rle_b)
 #' 
-#' stopifnot(all.equal(result$lengths, c(2L, 1L, 2L)))
+#' stopifnot(all.equal(result$lengths, c(2, 1, 2)))
 #' stopifnot(all.equal(result$values, c(15, 25, 35)))
 #' @export
-rle_add <- function(rle_a, rle_b) {
-    .Call(`_rleops_rle_add`, rle_a, rle_b)
+rle_add <- function(rle_a, rle_b, recycle = FALSE) {
+    .Call(`_rleops_rle_add`, rle_a, rle_b, recycle)
+}
+
+#' Substract two rle objects, element-wise
+#'
+#' @param rle_a An R rle list object
+#' @param rle_b An R rle list object
+#' @param recycle If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.
+#' @return An R rle list object containing the difference
+#' @examples
+#' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+#' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+#' result <- rle_substract(rle_a, rle_b)
+#' 
+#' stopifnot(all.equal(result$lengths, c(2, 1, 2)))
+#' stopifnot(all.equal(result$values, c(5, 15, 5)))
+#' @export
+rle_substract <- function(rle_a, rle_b, recycle = FALSE) {
+    .Call(`_rleops_rle_substract`, rle_a, rle_b, recycle)
 }
 
 #' Multiply two rle objects, element-wise
 #'
 #' @param rle_a An R rle list object
 #' @param rle_b An R rle list object
+#' @param recycle If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.
 #' @return An R rle list object containing the product
 #' @examples
 #' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
@@ -31,14 +51,33 @@ rle_add <- function(rle_a, rle_b) {
 #' stopifnot(all.equal(result$lengths, c(2, 1, 2)))
 #' stopifnot(all.equal(result$values, c(50, 100, 300)))
 #' @export
-rle_multiply <- function(rle_a, rle_b) {
-    .Call(`_rleops_rle_multiply`, rle_a, rle_b)
+rle_multiply <- function(rle_a, rle_b, recycle = FALSE) {
+    .Call(`_rleops_rle_multiply`, rle_a, rle_b, recycle)
+}
+
+#' Divide two rle objects, element-wise
+#'
+#' @param rle_a An R rle list object
+#' @param rle_b An R rle list object
+#' @param recycle If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.
+#' @return An R rle list object containing the quotient
+#' @examples
+#' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+#' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+#' result <- rle_divide(rle_a, rle_b)
+#' 
+#' stopifnot(all.equal(result$lengths, c(2, 1, 2)))
+#' stopifnot(all.equal(result$values, c(2, 4, 4/3)))
+#' @export
+rle_divide <- function(rle_a, rle_b, recycle = FALSE) {
+    .Call(`_rleops_rle_divide`, rle_a, rle_b, recycle)
 }
 
 #' Element-wise equality of two rle objects
 #'
 #' @param rle_a An R rle list object
 #' @param rle_b An R rle list object
+#' @param recycle If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.
 #' @return An R rle list object containing 1.0 (TRUE), 0.0 (FALSE) or NaN
 #' @examples
 #' a <- list(lengths = c(2, 2), values = c(10, 20))
@@ -51,8 +90,8 @@ rle_multiply <- function(rle_a, rle_b) {
 #' res2 <- rle_eq(c, d)
 #' stopifnot(all.equal(res2, list(lengths = c(1, 1), values = c(NA_real_, 1.0))))
 #' @export
-rle_eq <- function(rle_a, rle_b) {
-    .Call(`_rleops_rle_eq`, rle_a, rle_b)
+rle_eq <- function(rle_a, rle_b, recycle = FALSE) {
+    .Call(`_rleops_rle_eq`, rle_a, rle_b, recycle)
 }
 
 #' Compact an RLE object by merging identical runs
@@ -104,7 +143,7 @@ rle_value_counts <- function(rle) {
 #' rle_in <- list(lengths = c(3, 3, 3), values = c(10, 20, 30))
 #' 
 #' res1 <- rle_slice(rle_in, 2, 7)
-#' stopifnot(isTRUE(all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30)))))
+#' stopifnot((all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30)))))
 #' 
 #' res2 <- rle_slice(rle_in, 1, 9)
 #' stopifnot(all.equal(res2, rle_in))
@@ -143,6 +182,18 @@ rle_which <- function(rle) {
 #'
 #' @param rle An R rle list object
 #' @return An R rle list object
+#' @examples
+#' rle_in <- list(lengths = c(2, 2, 2), values = c(5, 3, 7))
+#' res1 <- rle_cummax(rle_in)
+#' stopifnot(all.equal(res1, list(lengths = c(4, 2), values = c(5, 7))))
+#' 
+#' rle_na1 <- list(lengths = c(2, 2), values = c(NA_real_, 5))
+#' res2 <- rle_cummax(rle_na1)
+#' stopifnot(all.equal(res2, list(lengths = 4L, values = NA_real_)))
+#' 
+#' rle_na2 <- list(lengths = c(2, 2, 2), values = c(5, NA_real_, 10))
+#' res3 <- rle_cummax(rle_na2)
+#' stopifnot(all.equal(res3, list(lengths = c(2L, 4L), values = c(5, NA_real_))))
 #' @export
 rle_cummax <- function(rle) {
     .Call(`_rleops_rle_cummax`, rle)
@@ -152,6 +203,14 @@ rle_cummax <- function(rle) {
 #'
 #' @param rle An R rle list object
 #' @return An R rle list object
+#' @examples
+#' rle_in <- list(lengths = c(2, 2, 2), values = c(5, 8, 2))
+#' res1 <- rle_cummin(rle_in)
+#' stopifnot(all.equal(res1, list(lengths = c(4, 2), values = c(5, 2))))
+#' 
+#' rle_na1 <- list(lengths = c(1, 2), values = c(NA_real_, -5))
+#' res2 <- rle_cummin(rle_na1)
+#' stopifnot(all.equal(res2, list(lengths = 3L, values = NA_real_)))
 #' @export
 rle_cummin <- function(rle) {
     .Call(`_rleops_rle_cummin`, rle)

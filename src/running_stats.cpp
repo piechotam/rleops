@@ -35,6 +35,18 @@ List dot_rle_cumagg(List rle, F agg_func, double agg_init) {
 //'
 //' @param rle An R rle list object
 //' @return An R rle list object
+//' @examples
+//' rle_in <- list(lengths = c(2, 2, 2), values = c(5, 3, 7))
+//' res1 <- rle_cummax(rle_in)
+//' stopifnot(all.equal(res1, list(lengths = c(4, 2), values = c(5, 7))))
+//' 
+//' rle_na1 <- list(lengths = c(2, 2), values = c(NA_real_, 5))
+//' res2 <- rle_cummax(rle_na1)
+//' stopifnot(all.equal(res2, list(lengths = 4L, values = NA_real_)))
+//' 
+//' rle_na2 <- list(lengths = c(2, 2, 2), values = c(5, NA_real_, 10))
+//' res3 <- rle_cummax(rle_na2)
+//' stopifnot(all.equal(res3, list(lengths = c(2L, 4L), values = c(5, NA_real_))))
 //' @export
 // [[Rcpp::export]]
 List rle_cummax(List rle) {
@@ -49,6 +61,14 @@ List rle_cummax(List rle) {
 //'
 //' @param rle An R rle list object
 //' @return An R rle list object
+//' @examples
+//' rle_in <- list(lengths = c(2, 2, 2), values = c(5, 8, 2))
+//' res1 <- rle_cummin(rle_in)
+//' stopifnot(all.equal(res1, list(lengths = c(4, 2), values = c(5, 2))))
+//' 
+//' rle_na1 <- list(lengths = c(1, 2), values = c(NA_real_, -5))
+//' res2 <- rle_cummin(rle_na1)
+//' stopifnot(all.equal(res2, list(lengths = 3L, values = NA_real_)))
 //' @export
 // [[Rcpp::export]]
 List rle_cummin(List rle) {

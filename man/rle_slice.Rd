@@ -23,7 +23,7 @@ Extract a slice of an rle vector
 rle_in <- list(lengths = c(3, 3, 3), values = c(10, 20, 30))
 
 res1 <- rle_slice(rle_in, 2, 7)
-stopifnot(isTRUE(all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30)))))
+stopifnot((all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30)))))
 
 res2 <- rle_slice(rle_in, 1, 9)
 stopifnot(all.equal(res2, rle_in))

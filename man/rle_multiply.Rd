@@ -4,12 +4,14 @@
 \alias{rle_multiply}
 \title{Multiply two rle objects, element-wise}
 \usage{
-rle_multiply(rle_a, rle_b)
+rle_multiply(rle_a, rle_b, recycle = FALSE)
 }
 \arguments{
 \item{rle_a}{An R rle list object}
 
 \item{rle_b}{An R rle list object}
+
+\item{recycle}{If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.}
 }
 \value{
 An R rle list object containing the product

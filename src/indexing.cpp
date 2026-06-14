@@ -16,7 +16,7 @@ using namespace Rcpp;
 //' rle_in <- list(lengths = c(3, 3, 3), values = c(10, 20, 30))
 //' 
 //' res1 <- rle_slice(rle_in, 2, 7)
-//' stopifnot((all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30))))
+//' stopifnot((all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30)))))
 //' 
 //' res2 <- rle_slice(rle_in, 1, 9)
 //' stopifnot(all.equal(res2, rle_in))
@@ -60,7 +60,7 @@ List rle_slice(List rle, size_t start, size_t end) {
                         Named("values") = wrap(out_vals));
 }
 
-//' Find indices of TRUE (1.0) values in an RLE object
+//' Find indices of TRUE (1.0) values in an rle object
 //'
 //' @param rle An R rle list object (where 1.0 represents TRUE)
 //' @return An integer vector of 1-based indices

@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-//' Compact an RLE object by merging identical runs
+//' Compact an rle object by merging identical runs
 //'
 //' @param rle An R rle list object
 //' @return An R rle list object with identical runs merged
@@ -38,7 +38,7 @@ List rle_compact(List rle) {
                         Named("values") = wrap(out_vals));
 }
 
-//' Unique values and their frequencies of an RLE object
+//' Unique values and their frequencies of an rle object
 //'
 //' @param rle An R rle list object
 //' @return A list containing unique values and their total counts

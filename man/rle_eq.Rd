@@ -4,12 +4,14 @@
 \alias{rle_eq}
 \title{Element-wise equality of two rle objects}
 \usage{
-rle_eq(rle_a, rle_b)
+rle_eq(rle_a, rle_b, recycle = FALSE)
 }
 \arguments{
 \item{rle_a}{An R rle list object}
 
 \item{rle_b}{An R rle list object}
+
+\item{recycle}{If TRUE, shorter rle will be recycled. If FALSE, rle lengths must match.}
 }
 \value{
 An R rle list object containing 1.0 (TRUE), 0.0 (FALSE) or NaN
