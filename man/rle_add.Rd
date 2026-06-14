@@ -17,3 +17,11 @@ An R rle list object containing the sum
 \description{
 Add two rle objects, element-wise
 }
+\examples{
+rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+result <- rle_add(rle_a, rle_b)
+
+stopifnot(all.equal(result$lengths, c(2L, 1L, 2L)))
+stopifnot(all.equal(result$values, c(15, 25, 35)))
+}

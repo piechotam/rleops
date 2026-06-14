@@ -8,6 +8,17 @@ using namespace Rcpp;
 //'
 //' @param rle An R rle list object
 //' @return An R rle list object with identical runs merged
+//' @examples
+//' uncompacted <- list(lengths = c(2, 3, 1), values = c(5, 5, 10))
+//' res1 <- rle_compact(uncompacted)
+//' stopifnot(all.equal(res1, list(lengths = c(5, 1), values = c(5, 10))))
+//' 
+//' compacted <- list(lengths = c(5, 2), values = c(1, 2))
+//' stopifnot(all.equal(rle_compact(compacted), compacted))
+//' 
+//' nas <- list(lengths = c(1, 2), values = c(NA_real_, NA_real_))
+//' res2 <- rle_compact(nas)
+//' stopifnot(all.equal(res2, list(lengths = 3, values = NA_real_)))
 //' @export
 // [[Rcpp::export]]
 List rle_compact(List rle) {
@@ -31,6 +42,16 @@ List rle_compact(List rle) {
 //'
 //' @param rle An R rle list object
 //' @return A list containing unique values and their total counts
+//' @examples
+//' rle_in <- list(lengths = c(2, 3, 4), values = c(10, 20, 10))
+//' res1 <- rle_value_counts(rle_in)
+//' # No guarantee on the order in output
+//' stopifnot(all.equal(res1$counts[res1$values == 10], 6))
+//' stopifnot(all.equal(res1$counts[res1$values == 20], 3))
+//' 
+//' empty <- list(lengths = integer(0), values = numeric(0))
+//' res3 <- rle_value_counts(empty)
+//' stopifnot(all.equal(length(res3$values), 0))
 //' @export
 // [[Rcpp::export]]
 List rle_value_counts(List rle) {

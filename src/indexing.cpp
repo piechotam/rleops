@@ -12,6 +12,19 @@ using namespace Rcpp;
 //' @param start The 1-based starting index
 //' @param end The 1-based ending index
 //' @return A sliced R rle list object
+//' @examples
+//' rle_in <- list(lengths = c(3, 3, 3), values = c(10, 20, 30))
+//' 
+//' res1 <- rle_slice(rle_in, 2, 7)
+//' stopifnot((all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30))))
+//' 
+//' res2 <- rle_slice(rle_in, 1, 9)
+//' stopifnot(all.equal(res2, rle_in))
+//' 
+//' res3 <- rle_slice(rle_in, 5, 5)
+//' stopifnot(all.equal(res3, list(lengths = 1, values = 20)))
+//' res4 <- rle_slice(rle_in, 8, 20)
+//' stopifnot(all.equal(res4, list(lengths = 2, values = 30)))
 //' @export
 // [[Rcpp::export]]
 List rle_slice(List rle, size_t start, size_t end) {
@@ -51,6 +64,18 @@ List rle_slice(List rle, size_t start, size_t end) {
 //'
 //' @param rle An R rle list object (where 1.0 represents TRUE)
 //' @return An integer vector of 1-based indices
+//' @examples
+//' rle_in <- list(lengths = c(2, 1, 2), values = c(0, 1, 1))
+//' res1 <- rle_which(rle_in)
+//' stopifnot(all.equal(res1, c(3, 4, 5)))
+//' 
+//' rle_false <- list(lengths = c(5), values = c(0))
+//' res2 <- rle_which(rle_false)
+//' stopifnot(all.equal(res2, integer(0)))
+//' 
+//' rle_na <- list(lengths = c(2, 1), values = c(NA_real_, 1))
+//' res3 <- rle_which(rle_na)
+//' stopifnot(all.equal(res3, 3))
 //' @export
 // [[Rcpp::export]]
 IntegerVector rle_which(List rle) {
@@ -58,7 +83,6 @@ IntegerVector rle_which(List rle) {
     IntegerVector lens = rle["lengths"];
     int n = vals.size();
 
-    // First pass: count total TRUEs to pre-allocate exact memory size
     int true_count = 0;
     for (int i = 0; i < n; ++i) {
         if (!NumericVector::is_na(vals[i]) && vals[i] == 1.0) {
@@ -68,9 +92,8 @@ IntegerVector rle_which(List rle) {
 
     IntegerVector out(true_count);
     int idx = 0;
-    int current_pos = 1; // R is 1-based
+    int current_pos = 1;
 
-    // Second pass: populate indices
     for (int i = 0; i < n; ++i) {
         if (!NumericVector::is_na(vals[i]) && vals[i] == 1.0) {
             for (int j = 0; j < lens[i]; ++j) {

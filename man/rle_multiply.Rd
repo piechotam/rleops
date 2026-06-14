@@ -17,3 +17,11 @@ An R rle list object containing the product
 \description{
 Multiply two rle objects, element-wise
 }
+\examples{
+rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+result <- rle_multiply(rle_a, rle_b)
+
+stopifnot(all.equal(result$lengths, c(2, 1, 2)))
+stopifnot(all.equal(result$values, c(50, 100, 300)))
+}

@@ -6,6 +6,13 @@
 #' @param rle_a An R rle list object
 #' @param rle_b An R rle list object
 #' @return An R rle list object containing the sum
+#' @examples
+#' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+#' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+#' result <- rle_add(rle_a, rle_b)
+#' 
+#' stopifnot(all.equal(result$lengths, c(2L, 1L, 2L)))
+#' stopifnot(all.equal(result$values, c(15, 25, 35)))
 #' @export
 rle_add <- function(rle_a, rle_b) {
     .Call(`_rleops_rle_add`, rle_a, rle_b)
@@ -16,16 +23,33 @@ rle_add <- function(rle_a, rle_b) {
 #' @param rle_a An R rle list object
 #' @param rle_b An R rle list object
 #' @return An R rle list object containing the product
+#' @examples
+#' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+#' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+#' result <- rle_multiply(rle_a, rle_b)
+#' 
+#' stopifnot(all.equal(result$lengths, c(2, 1, 2)))
+#' stopifnot(all.equal(result$values, c(50, 100, 300)))
 #' @export
 rle_multiply <- function(rle_a, rle_b) {
     .Call(`_rleops_rle_multiply`, rle_a, rle_b)
 }
 
-#' Returns true if both rle object have the same elements
+#' Element-wise equality of two rle objects
 #'
 #' @param rle_a An R rle list object
 #' @param rle_b An R rle list object
 #' @return An R rle list object containing 1.0 (TRUE), 0.0 (FALSE) or NaN
+#' @examples
+#' a <- list(lengths = c(2, 2), values = c(10, 20))
+#' b <- list(lengths = c(2, 2), values = c(10, 99))
+#' res1 <- rle_eq(a, b)
+#' stopifnot(all.equal(res1, list(lengths = c(2, 2), values = c(1.0, 0.0))))
+#' 
+#' c <- list(lengths = c(2), values = c(10))
+#' d <- list(lengths = c(1, 1), values = c(NA_real_, 10))
+#' res2 <- rle_eq(c, d)
+#' stopifnot(all.equal(res2, list(lengths = c(1, 1), values = c(NA_real_, 1.0))))
 #' @export
 rle_eq <- function(rle_a, rle_b) {
     .Call(`_rleops_rle_eq`, rle_a, rle_b)
@@ -35,6 +59,17 @@ rle_eq <- function(rle_a, rle_b) {
 #'
 #' @param rle An R rle list object
 #' @return An R rle list object with identical runs merged
+#' @examples
+#' uncompacted <- list(lengths = c(2, 3, 1), values = c(5, 5, 10))
+#' res1 <- rle_compact(uncompacted)
+#' stopifnot(all.equal(res1, list(lengths = c(5, 1), values = c(5, 10))))
+#' 
+#' compacted <- list(lengths = c(5, 2), values = c(1, 2))
+#' stopifnot(all.equal(rle_compact(compacted), compacted))
+#' 
+#' nas <- list(lengths = c(1, 2), values = c(NA_real_, NA_real_))
+#' res2 <- rle_compact(nas)
+#' stopifnot(all.equal(res2, list(lengths = 3, values = NA_real_)))
 #' @export
 rle_compact <- function(rle) {
     .Call(`_rleops_rle_compact`, rle)
@@ -44,6 +79,16 @@ rle_compact <- function(rle) {
 #'
 #' @param rle An R rle list object
 #' @return A list containing unique values and their total counts
+#' @examples
+#' rle_in <- list(lengths = c(2, 3, 4), values = c(10, 20, 10))
+#' res1 <- rle_value_counts(rle_in)
+#' # No guarantee on the order in output
+#' stopifnot(all.equal(res1$counts[res1$values == 10], 6))
+#' stopifnot(all.equal(res1$counts[res1$values == 20], 3))
+#' 
+#' empty <- list(lengths = integer(0), values = numeric(0))
+#' res3 <- rle_value_counts(empty)
+#' stopifnot(all.equal(length(res3$values), 0))
 #' @export
 rle_value_counts <- function(rle) {
     .Call(`_rleops_rle_value_counts`, rle)
@@ -55,6 +100,19 @@ rle_value_counts <- function(rle) {
 #' @param start The 1-based starting index
 #' @param end The 1-based ending index
 #' @return A sliced R rle list object
+#' @examples
+#' rle_in <- list(lengths = c(3, 3, 3), values = c(10, 20, 30))
+#' 
+#' res1 <- rle_slice(rle_in, 2, 7)
+#' stopifnot(isTRUE(all.equal(res1, list(lengths = c(2, 3, 1), values = c(10, 20, 30)))))
+#' 
+#' res2 <- rle_slice(rle_in, 1, 9)
+#' stopifnot(all.equal(res2, rle_in))
+#' 
+#' res3 <- rle_slice(rle_in, 5, 5)
+#' stopifnot(all.equal(res3, list(lengths = 1, values = 20)))
+#' res4 <- rle_slice(rle_in, 8, 20)
+#' stopifnot(all.equal(res4, list(lengths = 2, values = 30)))
 #' @export
 rle_slice <- function(rle, start, end) {
     .Call(`_rleops_rle_slice`, rle, start, end)
@@ -64,6 +122,18 @@ rle_slice <- function(rle, start, end) {
 #'
 #' @param rle An R rle list object (where 1.0 represents TRUE)
 #' @return An integer vector of 1-based indices
+#' @examples
+#' rle_in <- list(lengths = c(2, 1, 2), values = c(0, 1, 1))
+#' res1 <- rle_which(rle_in)
+#' stopifnot(all.equal(res1, c(3, 4, 5)))
+#' 
+#' rle_false <- list(lengths = c(5), values = c(0))
+#' res2 <- rle_which(rle_false)
+#' stopifnot(all.equal(res2, integer(0)))
+#' 
+#' rle_na <- list(lengths = c(2, 1), values = c(NA_real_, 1))
+#' res3 <- rle_which(rle_na)
+#' stopifnot(all.equal(res3, 3))
 #' @export
 rle_which <- function(rle) {
     .Call(`_rleops_rle_which`, rle)

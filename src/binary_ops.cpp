@@ -54,6 +54,13 @@ List dot_rle_binary_op(List rle_a, List rle_b, F binary_func) {
 //' @param rle_a An R rle list object
 //' @param rle_b An R rle list object
 //' @return An R rle list object containing the sum
+//' @examples
+//' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+//' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+//' result <- rle_add(rle_a, rle_b)
+//' 
+//' stopifnot(all.equal(result$lengths, c(2L, 1L, 2L)))
+//' stopifnot(all.equal(result$values, c(15, 25, 35)))
 //' @export
 // [[Rcpp::export]]
 List rle_add(List rle_a, List rle_b) {
@@ -66,6 +73,13 @@ List rle_add(List rle_a, List rle_b) {
 //' @param rle_a An R rle list object
 //' @param rle_b An R rle list object
 //' @return An R rle list object containing the product
+//' @examples
+//' rle_a <- list(lengths = c(2, 3), values = c(10, 20))
+//' rle_b <- list(lengths = c(3, 2), values = c(5, 15))
+//' result <- rle_multiply(rle_a, rle_b)
+//' 
+//' stopifnot(all.equal(result$lengths, c(2, 1, 2)))
+//' stopifnot(all.equal(result$values, c(50, 100, 300)))
 //' @export
 // [[Rcpp::export]]
 List rle_multiply(List rle_a, List rle_b) {
@@ -73,11 +87,21 @@ List rle_multiply(List rle_a, List rle_b) {
     return dot_rle_binary_op(rle_a, rle_b, binary_func);
 }
 
-//' Returns true if both rle object have the same elements
+//' Element-wise equality of two rle objects
 //'
 //' @param rle_a An R rle list object
 //' @param rle_b An R rle list object
 //' @return An R rle list object containing 1.0 (TRUE), 0.0 (FALSE) or NaN
+//' @examples
+//' a <- list(lengths = c(2, 2), values = c(10, 20))
+//' b <- list(lengths = c(2, 2), values = c(10, 99))
+//' res1 <- rle_eq(a, b)
+//' stopifnot(all.equal(res1, list(lengths = c(2, 2), values = c(1.0, 0.0))))
+//' 
+//' c <- list(lengths = c(2), values = c(10))
+//' d <- list(lengths = c(1, 1), values = c(NA_real_, 10))
+//' res2 <- rle_eq(c, d)
+//' stopifnot(all.equal(res2, list(lengths = c(1, 1), values = c(NA_real_, 1.0))))
 //' @export
 // [[Rcpp::export]]
 List rle_eq(List rle_a, List rle_b) {

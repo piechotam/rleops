@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{rle_eq}
 \alias{rle_eq}
-\title{Returns true if both rle object have the same elements}
+\title{Element-wise equality of two rle objects}
 \usage{
 rle_eq(rle_a, rle_b)
 }
@@ -15,5 +15,16 @@ rle_eq(rle_a, rle_b)
 An R rle list object containing 1.0 (TRUE), 0.0 (FALSE) or NaN
 }
 \description{
-Returns true if both rle object have the same elements
+Element-wise equality of two rle objects
+}
+\examples{
+a <- list(lengths = c(2, 2), values = c(10, 20))
+b <- list(lengths = c(2, 2), values = c(10, 99))
+res1 <- rle_eq(a, b)
+stopifnot(all.equal(res1, list(lengths = c(2, 2), values = c(1.0, 0.0))))
+
+c <- list(lengths = c(2), values = c(10))
+d <- list(lengths = c(1, 1), values = c(NA_real_, 10))
+res2 <- rle_eq(c, d)
+stopifnot(all.equal(res2, list(lengths = c(1, 1), values = c(NA_real_, 1.0))))
 }
