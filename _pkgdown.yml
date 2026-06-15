@@ -5,7 +5,7 @@ template:
 
 navbar:
   structure:
-    left: [intro, docs]
+    left: [intro, reference]
     right: [github]
   components:
       github:
