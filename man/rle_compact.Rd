@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{rle_compact}
 \alias{rle_compact}
-\title{Compact an RLE object by merging identical runs}
+\title{Compact an rle object by merging identical runs}
 \usage{
 rle_compact(rle)
 }
@@ -13,7 +13,7 @@ rle_compact(rle)
 An R rle list object with identical runs merged
 }
 \description{
-Compact an RLE object by merging identical runs
+Compact an rle object by merging identical runs
 }
 \examples{
 uncompacted <- list(lengths = c(2, 3, 1), values = c(5, 5, 10))

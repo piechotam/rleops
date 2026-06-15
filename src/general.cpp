@@ -89,3 +89,44 @@ List rle_value_counts(List rle) {
     return List::create(Named("values") = out_vals,
                         Named("counts") = out_counts);
 }
+
+//' Filter an rle vector by another logical rle vector
+//'
+//' @param rle_data An R rle list object with data to filter
+//' @param rle_mask An R rle list object with logical mask
+//' @return A filtered rle list object
+//' @export
+// [[Rcpp::export]]
+List rle_filter(List rle_data, List rle_mask) {
+    NumericVector vals_d = rle_data["values"];
+    IntegerVector lens_d = rle_data["lengths"];
+    NumericVector vals_m = rle_mask["values"];
+    IntegerVector lens_m = rle_mask["lengths"];
+
+    size_t n_d = vals_d.size();
+    size_t n_m = vals_m.size();
+
+    std::vector<double> out_vals;
+    std::vector<size_t> out_lens;
+
+    size_t i = 0, j = 0;
+    size_t rem_d = (n_d > 0) ? lens_d[0] : 0;
+    size_t rem_m = (n_m > 0) ? lens_m[0] : 0;
+
+    while (i < n_d && j < n_m) {
+        size_t step = std::min(rem_d, rem_m);
+
+        if (!NumericVector::is_na(vals_m[j]) && vals_m[j] == 1.0) {
+            dot_push_rle(out_vals, out_lens, vals_d[i], step);
+        }
+
+        rem_d -= step;
+        rem_m -= step;
+
+        if (rem_d == 0 && ++i < n_d) rem_d = lens_d[i];
+        if (rem_m == 0 && ++j < n_m) rem_m = lens_m[j];
+    }
+
+    return List::create(Named("lengths") = wrap(out_lens),
+                        Named("values") = wrap(out_vals));
+}

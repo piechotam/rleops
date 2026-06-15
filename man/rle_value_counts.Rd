@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{rle_value_counts}
 \alias{rle_value_counts}
-\title{Unique values and their frequencies of an RLE object}
+\title{Unique values and their frequencies of an rle object}
 \usage{
 rle_value_counts(rle)
 }
@@ -13,7 +13,7 @@ rle_value_counts(rle)
 A list containing unique values and their total counts
 }
 \description{
-Unique values and their frequencies of an RLE object
+Unique values and their frequencies of an rle object
 }
 \examples{
 rle_in <- list(lengths = c(2, 3, 4), values = c(10, 20, 10))

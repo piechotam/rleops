@@ -52,10 +52,12 @@ List dot_rle_binary_op(List rle_a, List rle_b, F binary_func, bool recycle) {
         processed += step;
 
         if (rem_a == 0 && processed < out_len) {
-            rem_a = lens_a[(++i % n_a)];
+            i = (i + 1) % n_a;
+            rem_a = lens_a[i];
         }
         if (rem_b == 0 && processed < out_len) {
-            rem_b = lens_b[(++j % n_b)];
+            j = (j + 1) % n_b;
+            rem_b = lens_b[j];
         }
     }
 

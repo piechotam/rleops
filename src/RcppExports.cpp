@@ -10,6 +10,41 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// rle_length
+size_t rle_length(List rle);
+RcppExport SEXP _rleops_rle_length(SEXP rleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle(rleSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_length(rle));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rle_sum
+double rle_sum(List rle, bool na_rm);
+RcppExport SEXP _rleops_rle_sum(SEXP rleSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle(rleSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_sum(rle, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rle_mean
+double rle_mean(List rle, bool na_rm);
+RcppExport SEXP _rleops_rle_mean(SEXP rleSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle(rleSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_mean(rle, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rle_add
 List rle_add(List rle_a, List rle_b, bool recycle);
 RcppExport SEXP _rleops_rle_add(SEXP rle_aSEXP, SEXP rle_bSEXP, SEXP recycleSEXP) {
@@ -97,6 +132,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rle_filter
+List rle_filter(List rle_data, List rle_mask);
+RcppExport SEXP _rleops_rle_filter(SEXP rle_dataSEXP, SEXP rle_maskSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type rle_data(rle_dataSEXP);
+    Rcpp::traits::input_parameter< List >::type rle_mask(rle_maskSEXP);
+    rcpp_result_gen = Rcpp::wrap(rle_filter(rle_data, rle_mask));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rle_slice
 List rle_slice(List rle, size_t start, size_t end);
 RcppExport SEXP _rleops_rle_slice(SEXP rleSEXP, SEXP startSEXP, SEXP endSEXP) {
@@ -145,6 +192,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_rleops_rle_length", (DL_FUNC) &_rleops_rle_length, 1},
+    {"_rleops_rle_sum", (DL_FUNC) &_rleops_rle_sum, 2},
+    {"_rleops_rle_mean", (DL_FUNC) &_rleops_rle_mean, 2},
     {"_rleops_rle_add", (DL_FUNC) &_rleops_rle_add, 3},
     {"_rleops_rle_substract", (DL_FUNC) &_rleops_rle_substract, 3},
     {"_rleops_rle_multiply", (DL_FUNC) &_rleops_rle_multiply, 3},
@@ -152,6 +202,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rleops_rle_eq", (DL_FUNC) &_rleops_rle_eq, 3},
     {"_rleops_rle_compact", (DL_FUNC) &_rleops_rle_compact, 1},
     {"_rleops_rle_value_counts", (DL_FUNC) &_rleops_rle_value_counts, 1},
+    {"_rleops_rle_filter", (DL_FUNC) &_rleops_rle_filter, 2},
     {"_rleops_rle_slice", (DL_FUNC) &_rleops_rle_slice, 3},
     {"_rleops_rle_which", (DL_FUNC) &_rleops_rle_which, 1},
     {"_rleops_rle_cummax", (DL_FUNC) &_rleops_rle_cummax, 1},

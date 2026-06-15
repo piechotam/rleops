@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{rle_which}
 \alias{rle_which}
-\title{Find indices of TRUE (1.0) values in an RLE object}
+\title{Find indices of TRUE (1.0) values in an rle object}
 \usage{
 rle_which(rle)
 }
@@ -13,7 +13,7 @@ rle_which(rle)
 An integer vector of 1-based indices
 }
 \description{
-Find indices of TRUE (1.0) values in an RLE object
+Find indices of TRUE (1.0) values in an rle object
 }
 \examples{
 rle_in <- list(lengths = c(2, 1, 2), values = c(0, 1, 1))
