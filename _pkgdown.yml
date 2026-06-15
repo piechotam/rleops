@@ -1,0 +1,14 @@
+url: https://piechotam.github.io/rleops/
+template:
+  bootstrap: 5
+  theme: flatly
+
+navbar:
+  structure:
+    left: [intro, docs]
+    right: [github]
+  components:
+      github:
+        icon: fa-github
+        href: https://github.com/piechotam/rleops
+        aria-label: GitHub
