@@ -1,0 +1,34 @@
+# Package index
+
+## All functions
+
+- [`rle_add()`](https://piechotam.github.io/rleops/reference/rle_add.md)
+  : Add two rle objects, element-wise
+- [`rle_compact()`](https://piechotam.github.io/rleops/reference/rle_compact.md)
+  : Compact an rle object by merging identical runs
+- [`rle_cummax()`](https://piechotam.github.io/rleops/reference/rle_cummax.md)
+  : Cumulative Max of an rle object
+- [`rle_cummin()`](https://piechotam.github.io/rleops/reference/rle_cummin.md)
+  : Cumulative Min of an rle object
+- [`rle_divide()`](https://piechotam.github.io/rleops/reference/rle_divide.md)
+  : Divide two rle objects, element-wise
+- [`rle_eq()`](https://piechotam.github.io/rleops/reference/rle_eq.md) :
+  Element-wise equality of two rle objects
+- [`rle_filter()`](https://piechotam.github.io/rleops/reference/rle_filter.md)
+  : Filter an rle vector by another logical rle vector
+- [`rle_length()`](https://piechotam.github.io/rleops/reference/rle_length.md)
+  : Total length of the rle object (number of elements before encoding)
+- [`rle_mean()`](https://piechotam.github.io/rleops/reference/rle_mean.md)
+  : Mean of all values in an rle object
+- [`rle_multiply()`](https://piechotam.github.io/rleops/reference/rle_multiply.md)
+  : Multiply two rle objects, element-wise
+- [`rle_slice()`](https://piechotam.github.io/rleops/reference/rle_slice.md)
+  : Extract a slice of an rle vector
+- [`rle_substract()`](https://piechotam.github.io/rleops/reference/rle_substract.md)
+  : Substract two rle objects, element-wise
+- [`rle_sum()`](https://piechotam.github.io/rleops/reference/rle_sum.md)
+  : Sum of all values in an rle object
+- [`rle_value_counts()`](https://piechotam.github.io/rleops/reference/rle_value_counts.md)
+  : Unique values and their frequencies of an rle object
+- [`rle_which()`](https://piechotam.github.io/rleops/reference/rle_which.md)
+  : Find indices of TRUE (1.0) values in an rle object
