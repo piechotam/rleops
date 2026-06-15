@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "common.hpp"
+#include "common.h"
 
 using namespace Rcpp;
 
